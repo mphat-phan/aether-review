@@ -1,0 +1,5 @@
+#Error
+2 cách throw Error
+
+-   Sử dụng thư viện http-errors
+-   Sử dụng các hàm error đã custom
