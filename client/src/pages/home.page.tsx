@@ -1,7 +1,25 @@
 import React from 'react'
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { increment, decrement } from '~/store/actions/counter.action';
+import type { RootState } from '~/store';
 
 export default function HomePage() {
-  return (
-    <div>Home</div>
-  )
+    const dispatch = useAppDispatch()
+    const handleIncrement = (num: number) => {
+        dispatch(increment(num))
+    }
+
+    const handleDecrement = (num: number) => {
+
+    }
+    const {num} = useAppSelector((state: RootState) => state.counter)
+    return (
+        <>
+            <div>{num}</div>
+            <div>
+                <button onClick={() => handleIncrement(num)}>Increment</button>
+                <button onClick={() => handleDecrement(num)}>Decrement</button>
+            </div>
+        </>
+    )
 }
