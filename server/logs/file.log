@@ -1,6 +1,0 @@
-GET /api/auth/login 404 32 - 9.281 ms
-GET /api/auth/login 404 32 - 3.911 ms
-GET /api/auth/login 404 32 - 4.482 ms
-GET /api/auth/login 404 32 - 10.257 ms
-GET /api/auth/login 404 32 - 4.408 ms
-GET /api/auth/login 404 32 - 4.996 ms
