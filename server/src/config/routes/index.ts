@@ -4,6 +4,7 @@ import NotFound from "../middleware/notFound.js";
 import errorHandler from "../middleware/errorHandler.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import { Request, Response } from "express";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const router = express.Router();

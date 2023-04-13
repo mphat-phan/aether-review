@@ -1,32 +1,16 @@
-import express from "express";
-import router from "./src/config/routes/index.js";
-import cors from "cors";
-import xss from "xss-clean";
-import corsOptions from "./src/config/cors/corsOption.js";
-import cookieParser from "cookie-parser";
 import connectMongo from "./src/utils/db/mongo.connect.js";
-import helmet from "helmet";
-import logger from "./src/config/middleware/logger.js";
-import rateLimiter from "./src/config/rate-limiter/index.js";
-import * as ENV from "./src/config/env.js";
+import config from "./src/config/env.js";
+import ExpressLoader from "./express.js";
 
-const app = express();
-
-app.use(rateLimiter);
-app.use(express.json());
-app.use(helmet());
-app.use(xss());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors(corsOptions));
-app.use(cookieParser());
-app.use(logger);
-app.use(router);
-
-const con = connectMongo(ENV.MONGO_URI);
-app.listen(ENV.PORT, () => {
-    console.log(`Server is running in ${ENV.PORT}`);
-});
-
+const express = new ExpressLoader();
+const con = connectMongo(config.MONGO_URI);
+declare global {
+    namespace Express {
+        interface Request{
+            user: any
+        }
+    }
+}
 process.on("SIGINT", async () => {
     await con.connection.close();
     process.exit(0);
