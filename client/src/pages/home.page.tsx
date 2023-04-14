@@ -17,8 +17,8 @@ export default function HomePage() {
         <>
             <div>{num}</div>
             <div>
-                <button onClick={() => handleIncrement(num)}>Increment</button>
-                <button onClick={() => handleDecrement(num)}>Decrement</button>
+                <button onClick={() => dispatch(increment(num))}>Increment</button>
+                <button onClick={() => dispatch(decrement(num))}>Decrement</button>
             </div>
         </>
     )

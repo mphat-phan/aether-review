@@ -13,7 +13,7 @@ export const decrement = (num: number) => async(dispatch: Dispatch) => {
     dispatch({
         type: "decrement",
         payload: {
-            num: num + 1
+            num: num - 1
         }
     })
 }

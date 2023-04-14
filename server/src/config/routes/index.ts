@@ -11,7 +11,14 @@ const router = express.Router();
 
 router.use("/", express.static(path.join(__dirname, "/public")));
 
+
 router.use("/api/auth", UserRouter);
+
+router.use("/api", (req: Request, res: Response) => {
+    res.status(200).json({
+        message: "API is running"
+    })
+})
 
 router.all("*", NotFound);
 

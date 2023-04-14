@@ -9,6 +9,9 @@ const userService = new UserService();
 const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, _password } = req.body;
+
+        if(!email && !_password) throw createHttpError.BadRequest("Something wrongs!!");
+
         const user = await userService.findByEmail(email)
 
         // Kiểm tra user đã đăng ký
