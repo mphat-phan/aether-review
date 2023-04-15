@@ -53,7 +53,8 @@ const register = async(req: Request, res: Response, next: NextFunction) => {
         const createUser = await userService.createUser(createUserParams)
         res.status(StatusCodes.CREATED).send({
             status: StatusCodes.CREATED,
-            user: createUser
+            user: createUser,
+            message: "Register Successfully"
         })
     } catch (error) {
         next(error)

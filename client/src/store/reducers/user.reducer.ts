@@ -30,7 +30,31 @@ const loginReducer = (state={}, action:any) => {
             return state
     }
 }
-
+const registerReducer = (state={}, action: any) => {
+    switch (action.type){
+        case constant.USER_REGISTER_REQUEST: 
+            return {
+                loading: true,
+                status: "pending",
+                message: "Loading..."
+            }
+        case constant.USER_REGISTER_SUCCESS:
+            return {
+                loading: false,
+                status: "success",
+                message: "Register successfully"
+            }
+        case constant.USER_REGISTER_FAIL: 
+            return {
+                loading: false,
+                status: "fail",
+                message: action.payload
+            }
+        default: 
+            return state
+    }
+}
 export {
-    loginReducer
+    loginReducer,
+    registerReducer
 }

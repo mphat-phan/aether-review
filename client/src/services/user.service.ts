@@ -6,6 +6,12 @@ export type loginInputs = {
     email: string,
     _password: string
 }
+
+export type registerInputs = {
+    name: string,
+    email: string,
+    password: string
+}
 export class UserService {
     static async test () {
         return await API.get("api")
@@ -27,6 +33,11 @@ export class UserService {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        })
+    }
+    static async register(payload: registerInputs){
+        return await API.post<registerInputs>("api/auth", payload, {
+            headers: {"Content-Type": "application/json"},
         })
     }
 }

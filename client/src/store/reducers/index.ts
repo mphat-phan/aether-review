@@ -1,7 +1,8 @@
-import { loginReducer } from "./user.reducer";
+import { loginReducer,registerReducer } from "./user.reducer";
 import { counterReducer } from "./counter.reducer";
 
 export {
     loginReducer,
-    counterReducer
+    counterReducer,
+    registerReducer
 }
