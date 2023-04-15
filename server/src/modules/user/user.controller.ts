@@ -33,10 +33,8 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
         
         res.status(StatusCodes.OK).send({
             status: StatusCodes.OK,
-            data: {
-                user: updateUser,
-                token: accessToken
-            }
+            user: updateUser,
+            token: accessToken
         })
     } catch (error) {
         next(error);
@@ -55,9 +53,7 @@ const register = async(req: Request, res: Response, next: NextFunction) => {
         const createUser = await userService.createUser(createUserParams)
         res.status(StatusCodes.CREATED).send({
             status: StatusCodes.CREATED,
-            data: {
-                user: createUser
-            }
+            user: createUser
         })
     } catch (error) {
         next(error)
