@@ -5,14 +5,16 @@ type Inputs = {
     name: string,
     rules: any,
     required?: boolean,
-    label: string
+    label: string,
+    disable?: boolean
 }
 export default function InputController(props:Inputs) {
     const {
         name,
         rules,
         required,
-        label
+        label,
+        disable
     } = props
     const { control } = useFormContext();
     return (
@@ -29,6 +31,7 @@ export default function InputController(props:Inputs) {
                         helperText={error?.message}
                         {...field}
                         fullWidth
+                        disabled={disable}
                     />
                 }
             />

@@ -1,18 +1,28 @@
-import { Dispatch } from "redux"
+import { Dispatch, Store,  } from "redux"
 import * as constant from "../constants/user.constant"
-import { UserService } from "~/services/user.service"
-export type LoginInputs = {
-    username: string,
-    email: string,
-    password: string,
-}
-export const loginAction = (payload: LoginInputs) => async (dispatch: Dispatch) => {
-    dispatch({
-        type: constant.USER_LOGIN_REQUEST
-    })
-    
-    const {data}: any = await UserService.test();
+import { UserService, loginInputs } from "~/services/user.service"
+import { RootState } from ".."
 
-    console.log(data);
+export const loginAction = (payload: loginInputs) => async (dispatch: Dispatch, getState : () => RootState) => {
+    try {
+        
+        dispatch({
+            type: constant.USER_LOGIN_REQUEST
+        })
 
+        const {data}: any = await UserService.login(payload);
+        localStorage.setItem("userInfo", JSON.stringify(data.user))
+        localStorage.setItem("token", data.token)
+
+        dispatch({
+            type: constant.USER_LOGIN_SUCCESS,
+            payload: data.user
+        })
+        
+    } catch (error:any ) {
+        dispatch({
+            type: constant.USER_LOGIN_FAIL,
+            payload: error?.response?.data?.message || "Something wrongs!!"
+        })
+    }
 }

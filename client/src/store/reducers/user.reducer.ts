@@ -4,19 +4,28 @@ const loginReducer = (state={}, action:any) => {
         case constant.USER_LOGIN_REQUEST: 
             return {
                 loading: true,
-                status: "pending"
+                status: "pending",
+                message: "Loading..."
             }
         case constant.USER_LOGIN_SUCCESS:
             return {
                 loading: false,
                 status: "success",
-                userInfo: action.payload
+                userInfo: action.payload,
+                message: "Login successfully"
             }
         case constant.USER_LOGIN_FAIL: 
             return {
                 loading: false,
                 status: "fail",
+                message: action.payload
             }
+        case constant.USER_LOGOUT: 
+            return {
+                isLogged: false,
+                userInfo: null
+            }
+        
         default: 
             return state
     }

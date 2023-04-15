@@ -8,6 +8,8 @@ const corsOptions = {
             callback(new Error("Not allowed by CORS"));
         }
     },
+    credentials: true,
+    exposedHeaders: ["set-cookie"],
     optionsSuccessStatus: 200,
 };
 
