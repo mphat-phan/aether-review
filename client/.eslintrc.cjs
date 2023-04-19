@@ -5,7 +5,7 @@ module.exports = {
     extends: [
         // Chúng ta sẽ dùng các rule mặc định từ các plugin mà chúng ta đã cài.
         'eslint:recommended',
-        'plugin:react/recommFended',
+        'plugin:react/recommended',
         'plugin:react-hooks/recommended',
         'plugin:import/recommended',
         'plugin:import/typescript',
