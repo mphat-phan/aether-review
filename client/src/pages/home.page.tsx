@@ -1,25 +1,14 @@
-import React from 'react'
-import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { increment, decrement } from '~/store/actions/counter.action';
-import type { RootState } from '~/store';
-
+import { useAppDispatch, useAppSelector } from '~/store/hooks'
+import { incrementAction, decrementAction } from '~/store/actions/counter.action'
+import { RootState } from '~/store/root.reducer'
 export default function HomePage() {
     const dispatch = useAppDispatch()
-    const handleIncrement = (num: number) => {
-        dispatch(increment(num))
-    }
-
-    const handleDecrement = (num: number) => {
-
-    }
-    const {num} = useAppSelector((state: RootState) => state.counter)
+    const { num } = useAppSelector((state: RootState) => state.count)
     return (
         <>
-            <div>{num}</div>
-            <div>
-                <button onClick={() => dispatch(increment(num))}>Increment</button>
-                <button onClick={() => dispatch(decrement(num))}>Decrement</button>
-            </div>
+            {num}
+            <button onClick={() => dispatch(incrementAction(num))}>Increment</button>
+            <button onClick={() => dispatch(decrementAction(num))}>Decrement</button>
         </>
     )
 }

@@ -1,32 +1,31 @@
-import React, { useEffect } from 'react'
 import { Container, Grid, Typography, Button, Paper, FormControl, Alert} from '@mui/material'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import CheckBoxController from '~/components/CheckBoxController'
 import InputController from '~/components/InputController'
-import { loginInputs } from '~/services/user.service'
-import { loginAction } from '~/store/actions/user.action'
-import { useAppDispatch, useAppSelector } from '~/store/hooks'
-import { RootState } from '~/store'
-import { useLocation, Navigate, useNavigate } from "react-router-dom"
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from "yup"
+
+const schema = yup.object({
+    email: yup.string().email().required('Email is required'),
+    _password: yup.string().required('Password is required'),
+    checkbox: yup.boolean().isTrue('Please check box').required('Please check box')
+})
+
+type loginInputs = yup.InferType<typeof schema>
+
 export default function LoginPage() {
-    const dispatch = useAppDispatch();
     const methods = useForm<loginInputs>({
         defaultValues: {
             email: "",
             _password: ""
-        }
-    });
-    const { handleSubmit, getValues, control } = methods;
-    const onSubmit:SubmitHandler<loginInputs> = ({email, _password}) => {
-        dispatch(loginAction({email, _password}))
+        },
+        resolver: yupResolver(schema)
+    })
+    const { handleSubmit } = methods
+    const onSubmit: SubmitHandler<loginInputs> = (props) => {
+        console.log(props)
     }
-    const { loading, status, message, isLogged, userInfo }:any = useAppSelector((state: RootState) => state.user)
-    const location = useLocation()
-    const navigate = useNavigate()
-    useEffect(() => {
-        if(isLogged && userInfo){
-            navigate("/")
-        }
-    },[isLogged,userInfo])
+
     return (
         <Container maxWidth="sm">
             <Grid container flexDirection="column" justifyContent="center" height="100vh">
@@ -34,43 +33,23 @@ export default function LoginPage() {
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <Grid container flexDirection="column" spacing={2} padding={5} >
-                                    <Grid item>
-                                        <Typography variant='h3'>Login</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        
-                                        <FormControl margin={'dense'} fullWidth>
-                                            <InputController
-                                                name='email'
-                                                label='Email'
-                                                required
-                                                rules={{
-                                                    pattern: {
-                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                                    message: "Địa chỉ email không hợp lệ",
-                                                    },
-                                                }}
-                                                disable={(!!loading)}
-                                            />
-                                        </FormControl>
-                                        <FormControl margin={'dense'} fullWidth>
-                                            <InputController
-                                                name='_password'
-                                                label='Pasword'
-                                                required
-                                                rules={{ minLength: {value: 6, message: "Nhập 6 kí tự"} }}
-                                                disable={(!!loading)}
-                                            />
-                                        </FormControl>
-                                    </Grid>
-                                    { status === "fail" && 
-                                        <Grid item>
-                                            <Alert severity="error">{message}</Alert>
-                                        </Grid>
-                                    }
-                                    <Grid item>
-                                        <Button variant='contained' type='submit' disabled={(!!loading)}>{loading ? "Loading..." : "Submit"}</Button>
-                                    </Grid>
+                                <Grid item>
+                                    <Typography variant='h3'>Login</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <FormControl margin={'dense'} fullWidth>
+                                        <InputController name='email' label='Email' />
+                                    </FormControl>
+                                    <FormControl margin={'dense'} fullWidth>
+                                        <InputController name='_password' label='Pasword' />
+                                    </FormControl>
+                                    <FormControl margin={'dense'} fullWidth>
+                                        <CheckBoxController label='Checkbox' name='checkbox' />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item>
+                                    <Button variant='contained' type='submit'>Submit</Button>
+                                </Grid>
                             </Grid>
                         </form>
                     </FormProvider>

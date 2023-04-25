@@ -4,7 +4,8 @@ import jwt from "jsonwebtoken"
 
 export type loginInputs = {
     email: string,
-    _password: string
+    _password: string,
+    checkbox: boolean
 }
 
 export type registerInputs = {

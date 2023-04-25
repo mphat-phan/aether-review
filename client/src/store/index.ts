@@ -1,27 +1,15 @@
-import { createStore, combineReducers, applyMiddleware } from "redux"
-import { composeWithDevTools } from "redux-devtools-extension"
-import thunk from "redux-thunk"
-import { loginReducer, counterReducer, registerReducer } from "./reducers"
+import { configureStore, Action } from '@reduxjs/toolkit'
+import rootReducer, { RootState } from './root.reducer'
+import thunk, { ThunkAction } from 'redux-thunk'
+import logger from 'redux-logger'
 
-const reducers = combineReducers({
-    counter: counterReducer,
-    user: loginReducer,
-    register: registerReducer
+const middleware = [thunk, logger]
+const store = configureStore({
+    reducer: rootReducer,
+    middleware
 })
+export type AppDispatch = typeof store.dispatch<any>
+export type AppThunk = ThunkAction<void, RootState, unknown, Action>
 
-const userLocalStorage = localStorage.getItem("userInfo")
-
-const initialState = {
-    user: {
-        isLogged: (!!userLocalStorage),
-        userInfo: userLocalStorage ? JSON.parse(userLocalStorage) : null
-    }
-}
-
-const middlewares = [thunk]
-const store = createStore(reducers, initialState, composeWithDevTools(applyMiddleware(...middlewares)))
-
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
 
 export default store

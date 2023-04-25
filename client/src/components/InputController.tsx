@@ -1,25 +1,25 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Controller, useFormContext, useController } from "react-hook-form";
 import { TextField } from "@mui/material"
 type Inputs = {
-    name: string,
-    rules: any,
-    required?: boolean,
-    label: string,
+    name: string
+    rules?: any
+    required?: boolean
+    label: string
     disable?: boolean
 }
-export default function InputController(props:Inputs) {
+export default function InputController(props: Inputs) {
     const {
         name,
         rules,
         required,
         label,
-        disable
+        disable,
     } = props
     const { control } = useFormContext();
     return (
         <>
-            <Controller 
+            <Controller
                 name={name}
                 control={control}
                 rules={{required: required && `${label} is required`, ...rules}}
