@@ -12,4 +12,4 @@ export const decrementAction =
     (num: number): AppThunk =>
     async (dispatch) => {
         dispatch(decrement(num - 1))
-}
+    }

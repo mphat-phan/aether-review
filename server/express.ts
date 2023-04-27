@@ -8,9 +8,11 @@ import xss from "xss-clean";
 import corsOptions from "./src/config/cors/corsOption.js";
 import cookieParser from "cookie-parser";
 import config from "./src/config/env.js";
-
+import { createServer } from "http";
+import { Server } from "socket.io"
 class ExpressLoader {
     private server;
+    private io;
     constructor(){
         const app = express()
         app.use(rateLimiter);
@@ -22,13 +24,22 @@ class ExpressLoader {
         app.use(cookieParser());
         app.use(logger);
         app.use(router);
-        
-        this.server = app.listen(config.PORT, () => {
+        const httpServer = createServer(app)
+        this.io = new Server(httpServer, {
+            cors: {
+                origin: "http://localhost:3000",
+                methods: ["GET", "POST"]
+            }
+        })
+        this.server = httpServer.listen(config.PORT, () => {
             console.log(`Server is running in ${config.PORT}`);
         });
     }
     get Server(){
         return this.server
+    }
+    get socketIO(){
+        return this.io
     }
 }
 

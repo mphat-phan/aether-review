@@ -1,14 +1,41 @@
-import { useAppDispatch, useAppSelector } from '~/store/hooks'
-import { incrementAction, decrementAction } from '~/store/actions/counter.action'
-import { RootState } from '~/store/root.reducer'
+import { useEffect, useState } from 'react'
+import socket from '~/socket'
 export default function HomePage() {
-    const dispatch = useAppDispatch()
-    const { num } = useAppSelector((state: RootState) => state.count)
+    const [clientId, setClientId] = useState('')
+    const [message, setMessage] = useState('')
+    const [room, setRoom] = useState('')
+    useEffect(() => {
+        socket.connect()
+        socket.on('connect', () => {
+            setClientId(socket.id)
+        })
+        socket.on('joinRoom', (arg) => {
+            setMessage(arg)
+        })
+    }, [])
+    // Listen Event
+    const sayHelloServer = () => {
+        socket.emit('hello', `${socket.id} xin chao`, (response: any) => {
+            const { message } = response
+            setMessage(message)
+        })
+    }
+    const disconnectServer = () => {
+        socket.disconnect()
+    }
+    const handleJoinRoom = (room: string) => {
+        console.log(room)
+        socket.emit('joinRoom', room)
+    }
     return (
         <>
-            {num}
-            <button onClick={() => dispatch(incrementAction(num))}>Increment</button>
-            <button onClick={() => dispatch(decrementAction(num))}>Decrement</button>
+            <button onClick={sayHelloServer}>Say Hello Server</button>
+            <button onClick={disconnectServer}>Disconnect Server</button>
+            <div>Client ID: {clientId}</div>
+            <div>Message</div>
+            <div>{message}</div>
+            <input type='text' value={room} onChange={(e) => setRoom(e.target.value)} />
+            <button onClick={() => handleJoinRoom(room)}>Join Room</button>
         </>
     )
 }

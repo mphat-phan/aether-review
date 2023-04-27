@@ -13,7 +13,7 @@ const countSlice = createSlice({
     name: 'count',
     initialState,
     reducers: {
-        setLoading(state, action: PayloadAction){
+        setLoading(state, action: PayloadAction) {
             state.loading = 'loading'
         },
         increment(state, action: PayloadAction<number>) {

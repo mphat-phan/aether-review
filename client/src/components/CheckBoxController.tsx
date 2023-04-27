@@ -1,6 +1,6 @@
 import React from 'react'
-import { Controller, useFormContext, useController } from "react-hook-form";
-import { Checkbox, FormControl, FormControlLabel, FormHelperText, TextField } from "@mui/material"
+import { Controller, useFormContext, useController } from 'react-hook-form'
+import { Checkbox, FormControl, FormControlLabel, FormHelperText, TextField } from '@mui/material'
 type Inputs = {
     name: string
     required?: boolean
@@ -16,12 +16,16 @@ export default function CheckBoxController(props: Inputs) {
                 name={name}
                 control={control}
                 rules={{ required: required && `${label} is required` }}
-                render={({ field , fieldState: {error} }) =>
+                render={({ field, fieldState: { error } }) => (
                     <FormControl error={!!error}>
-                        <FormControlLabel control={<Checkbox {...field} checked={!!field.value}/>} label={label} disabled={disable} />
+                        <FormControlLabel
+                            control={<Checkbox {...field} checked={!!field.value} />}
+                            label={label}
+                            disabled={disable}
+                        />
                         <FormHelperText>{error?.message}</FormHelperText>
                     </FormControl>
-                }
+                )}
             />
         </>
     )

@@ -1,9 +1,9 @@
-import { Container, Grid, Typography, Button, Paper, FormControl, Alert} from '@mui/material'
+import { Container, Grid, Typography, Button, Paper, FormControl, Alert } from '@mui/material'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
 import CheckBoxController from '~/components/CheckBoxController'
 import InputController from '~/components/InputController'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from "yup"
+import * as yup from 'yup'
 
 const schema = yup.object({
     email: yup.string().email().required('Email is required'),
@@ -16,8 +16,8 @@ type loginInputs = yup.InferType<typeof schema>
 export default function LoginPage() {
     const methods = useForm<loginInputs>({
         defaultValues: {
-            email: "",
-            _password: ""
+            email: '',
+            _password: ''
         },
         resolver: yupResolver(schema)
     })
@@ -27,12 +27,12 @@ export default function LoginPage() {
     }
 
     return (
-        <Container maxWidth="sm">
-            <Grid container flexDirection="column" justifyContent="center" height="100vh">
+        <Container maxWidth='sm'>
+            <Grid container flexDirection='column' justifyContent='center' height='100vh'>
                 <Paper elevation={3}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <Grid container flexDirection="column" spacing={2} padding={5} >
+                            <Grid container flexDirection='column' spacing={2} padding={5}>
                                 <Grid item>
                                     <Typography variant='h3'>Login</Typography>
                                 </Grid>
@@ -48,7 +48,9 @@ export default function LoginPage() {
                                     </FormControl>
                                 </Grid>
                                 <Grid item>
-                                    <Button variant='contained' type='submit'>Submit</Button>
+                                    <Button variant='contained' type='submit'>
+                                        Submit
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </form>
